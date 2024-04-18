@@ -20,7 +20,7 @@ interface PickupLineDao {
     @Query("SELECT * FROM pickuplines")
      fun getAllLines(): Flow<List<PickuplineEntity>>
 
-//    @Query("Delete FROM pickuplines where id = id")
-//    suspend fun deleteLine(id: String)
+  @Query("Delete FROM pickuplines where idKey =:idKey")
+   suspend fun deleteLine(idKey: Int)
 
 }

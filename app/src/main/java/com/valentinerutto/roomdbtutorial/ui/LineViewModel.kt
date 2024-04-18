@@ -50,6 +50,12 @@ class LineViewModel(private val repository: LineRepository) : ViewModel() {
         }
     }
 
+    fun deleteLine(entity: PickuplineEntity) {
+        viewModelScope.launch(IO) {
+            repository.deleteRandomLine(entity)
+        }
+    }
+
 
 //    data class UiState(
 //        val loading: Boolean = false,
