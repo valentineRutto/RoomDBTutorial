@@ -8,6 +8,7 @@ import com.valentinerutto.roomdbtutorial.utils.Constants
 
 @Database(
     entities = [PickuplineEntity::class], version = 1, exportSchema = false
+    //automigration -- read more about it
 )
 abstract class PickUpLIneDatabase : RoomDatabase() {
     abstract fun lineDao(): PickupLineDao

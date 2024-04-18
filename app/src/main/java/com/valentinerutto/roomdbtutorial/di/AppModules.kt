@@ -17,7 +17,9 @@ import retrofit2.Retrofit
 
 val networkingModule = module {
     single { App.INSTANCE }
+
     single<ApiService> { (get() as Retrofit).create(ApiService::class.java) }
+
     single { createOkClient() }
 
     single {
@@ -26,9 +28,11 @@ val networkingModule = module {
         )
     }
 }
+
 val repositoryModule = module {
     single { LineRepository(get(), database().lineDao()) }
 }
+
 val viewmodelModule = module {
 
     viewModel { LineViewModel(get()) }
@@ -38,8 +42,6 @@ val viewmodelModule = module {
 val databaseModule = module {
 
     single { PickUpLIneDatabase.getDatabase(context = androidContext()) }
-
-
 }
 
 fun Scope.database() = get<PickUpLIneDatabase>()

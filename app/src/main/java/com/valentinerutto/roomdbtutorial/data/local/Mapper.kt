@@ -1,4 +1,15 @@
 package com.valentinerutto.roomdbtutorial.data.local
 
-class Mapper {
+import com.valentinerutto.roomdbtutorial.data.remote.LineResponse
+import com.valentinerutto.roomdbtutorial.data.remote.RandomLineResponse
+
+fun mapResponseToEntity(response: LineResponse?): List<PickuplineEntity>? {
+    return response?.map {
+        PickuplineEntity(id = it.id!!, text = it.text!!)
+
+    }
+}
+
+fun mapResponseToEntity(response: RandomLineResponse?): PickuplineEntity {
+    return PickuplineEntity(id = response?.id!!, text = response.text!!)
 }

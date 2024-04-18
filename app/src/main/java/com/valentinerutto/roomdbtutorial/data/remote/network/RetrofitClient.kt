@@ -13,7 +13,7 @@ object RetrofitClient {
     @OptIn(ExperimentalSerializationApi::class)
     fun createRetrofit(baseUrl: String, okHttpClient: OkHttpClient): Retrofit {
 
-        val contentType = "application/json".toMediaType()
+        val contentType = "application/json".toMediaType() //this is for kotlinserialization
 
         return Retrofit.Builder().baseUrl(baseUrl).client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create()).build()
@@ -21,7 +21,6 @@ object RetrofitClient {
 
     fun createOkClient(): OkHttpClient {
         return OkHttpClient.Builder().addInterceptor(getLoggingInterceptor())
-
             .build()
     }
 
