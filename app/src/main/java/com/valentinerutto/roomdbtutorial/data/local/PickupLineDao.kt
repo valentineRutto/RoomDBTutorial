@@ -18,9 +18,9 @@ interface PickupLineDao {
     suspend fun insert(entity: PickuplineEntity)
 
     @Query("SELECT * FROM pickuplines")
-    suspend fun getAllLines(): Flow<List<PickuplineEntity>>
+     fun getAllLines(): Flow<List<PickuplineEntity>>
 
-    @Query("Delete FROM pickuplines where id = id")
-    suspend fun deleteLine(id: String)
+//    @Query("Delete FROM pickuplines where id = id")
+//    suspend fun deleteLine(id: String)
 
 }

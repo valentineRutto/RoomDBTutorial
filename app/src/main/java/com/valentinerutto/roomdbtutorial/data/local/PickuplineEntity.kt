@@ -5,5 +5,6 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "pickuplines")
 data class PickuplineEntity(
-    @PrimaryKey val id: String, val text: String
+
+    @PrimaryKey(autoGenerate = true) val idKey: Int =0 , val id: String?, val text: String?
 )

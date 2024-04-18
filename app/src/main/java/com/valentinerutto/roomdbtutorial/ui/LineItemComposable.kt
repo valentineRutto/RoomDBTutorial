@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.sp
 import com.valentinerutto.roomdbtutorial.data.local.PickuplineEntity
 
 @Composable
-fun LineItemComposable(modifier: Modifier, entity: PickuplineEntity) {
+fun LineItemComposable(modifier: Modifier, entity:PickuplineEntity) {
     Card(modifier = modifier) {
         Column(
             modifier = Modifier
@@ -21,7 +21,7 @@ fun LineItemComposable(modifier: Modifier, entity: PickuplineEntity) {
                 .padding(2.dp)
         ) {
             Spacer(modifier = Modifier.padding(2.dp))
-            Text(text = entity.text, fontSize = 16.sp)
+            Text(text = entity.text!!, fontSize = 16.sp)
             Spacer(modifier = Modifier.padding(1.dp))
         }
 

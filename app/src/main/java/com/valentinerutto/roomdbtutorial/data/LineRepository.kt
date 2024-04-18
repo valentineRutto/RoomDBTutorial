@@ -35,7 +35,7 @@ class LineRepository(private val apiService: ApiService, private val lineDao: Pi
 
     suspend fun deleteRandomLine(entity: PickuplineEntity) {
         withContext(IO) {
-            lineDao.deleteLine(entity.id)
+           // lineDao.deleteLine(entity.id)
         }
     }
 

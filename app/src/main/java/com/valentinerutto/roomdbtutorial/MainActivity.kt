@@ -8,9 +8,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
+import com.valentinerutto.roomdbtutorial.ui.LineItemComposable
 import com.valentinerutto.roomdbtutorial.ui.LineViewModel
 import com.valentinerutto.roomdbtutorial.ui.theme.RoomDBTutorialTheme
 import kotlinx.coroutines.launch
@@ -25,7 +27,6 @@ class MainActivity : ComponentActivity() {
         lifecycleScope.launch {
             viewmodel.getRandomLine()
         }
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +37,14 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
                 ) {
+
                     Greeting("Android")
+
+                    viewmodel.getSavedLine()
+                  
+                    val lineSaved = viewmodel.lineList.collectAsState().value[0]
+                    LineItemComposable(Modifier.fillMaxSize(), lineSaved)
+
                 }
             }
         }
