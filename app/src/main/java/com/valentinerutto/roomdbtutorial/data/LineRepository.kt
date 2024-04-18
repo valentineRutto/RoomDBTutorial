@@ -16,6 +16,7 @@ class LineRepository(private val apiService: ApiService, private val lineDao: Pi
     }
 
     suspend fun getRandomLine(): Resource<PickuplineEntity> {
+
         val response = apiService.getRandomPickupLine()
 
         if (!response.isSuccessful) {
@@ -24,13 +25,16 @@ class LineRepository(private val apiService: ApiService, private val lineDao: Pi
 
         val entity = mapResponseToEntity(response.body())
 
+
         return Resource.Success(entity)
     }
 
     suspend fun saveRandomLine(entity: PickuplineEntity) {
+
         withContext(IO) {
-            lineDao.insert(entity)
+            lineDao.insert(listOf(entity))
         }
+
     }
 
     suspend fun deleteRandomLine(entity: PickuplineEntity) {

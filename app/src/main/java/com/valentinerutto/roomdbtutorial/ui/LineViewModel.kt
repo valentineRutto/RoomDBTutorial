@@ -8,6 +8,7 @@ import com.valentinerutto.roomdbtutorial.utils.Resource
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -18,8 +19,8 @@ class LineViewModel(private val repository: LineRepository) : ViewModel() {
 
     fun getSavedLine() {
         viewModelScope.launch(IO) {
-            repository.getAllLines().collectLatest {
-                _lineList.tryEmit(it)
+            repository.getAllLines().collect{
+                _lineList.value = it
             }
         }
     }

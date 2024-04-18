@@ -42,8 +42,11 @@ class MainActivity : ComponentActivity() {
 
                     viewmodel.getSavedLine()
                   
-                    val lineSaved = viewmodel.lineList.collectAsState().value[0]
-                    LineItemComposable(Modifier.fillMaxSize(), lineSaved)
+                    val lineSaved = viewmodel.lineList.collectAsState().value.firstOrNull()
+
+                    if (lineSaved != null) {
+                        LineItemComposable(Modifier.fillMaxSize(), lineSaved)
+                    }
 
                 }
             }

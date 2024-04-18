@@ -15,7 +15,7 @@ interface PickupLineDao {
     suspend fun insertAll(entity: List<PickuplineEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(entity: PickuplineEntity)
+    suspend fun insert(entity: List<PickuplineEntity>)
 
     @Query("SELECT * FROM pickuplines")
      fun getAllLines(): Flow<List<PickuplineEntity>>
