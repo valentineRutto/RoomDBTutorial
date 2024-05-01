@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
         super.onStart()
 
         lifecycleScope.launch {
-            viewmodel.getRandomLine()
+            viewmodel.getListofPickUpLines()
         }
     }
 

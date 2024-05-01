@@ -33,8 +33,6 @@ fun LineItemComposable(modifier: Modifier, entity:PickuplineEntity) {
 
             }) {
                 Text(text = "Delete", fontSize = 16.sp)
-
-
             }
         }
 

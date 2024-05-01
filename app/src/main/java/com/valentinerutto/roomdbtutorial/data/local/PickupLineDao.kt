@@ -1,7 +1,7 @@
 package com.valentinerutto.roomdbtutorial.data.local
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -18,9 +18,11 @@ interface PickupLineDao {
     suspend fun insert(entity: List<PickuplineEntity>)
 
     @Query("SELECT * FROM pickuplines")
-     fun getAllLines(): Flow<List<PickuplineEntity>>
+    fun getAllLines(): Flow<List<PickuplineEntity>>
 
-  @Query("Delete FROM pickuplines where idKey =:idKey")
-   suspend fun deleteLine(idKey: Int)
+    @Query("Delete FROM pickuplines where idKey =:idKey")
+    suspend fun deleteLine(idKey: Int)
 
+    @Delete
+    suspend fun deleteAll()
 }
