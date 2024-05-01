@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
@@ -15,9 +16,12 @@ import com.valentinerutto.roomdbtutorial.data.local.PickuplineEntity
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun LineItemComposable(modifier: Modifier, entity:PickuplineEntity) {
+fun LineItemComposable(modifier: Modifier,  entity: PickuplineEntity) {
     val vm = koinViewModel<LineViewModel>()
-    Card(modifier = modifier) {
+    Card(
+        modifier = Modifier.padding(16.dp),
+        shape = RoundedCornerShape(16.dp),
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -29,7 +33,7 @@ fun LineItemComposable(modifier: Modifier, entity:PickuplineEntity) {
 
             Button(onClick = {
 
-           vm.deleteLine(entity)
+                vm.deleteLine(entity)
 
             }) {
                 Text(text = "Delete", fontSize = 16.sp)

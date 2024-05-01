@@ -12,8 +12,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
-import com.valentinerutto.roomdbtutorial.ui.LineItemComposable
 import com.valentinerutto.roomdbtutorial.ui.LineViewModel
+import com.valentinerutto.roomdbtutorial.ui.MainView
 import com.valentinerutto.roomdbtutorial.ui.theme.RoomDBTutorialTheme
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -41,13 +41,9 @@ class MainActivity : ComponentActivity() {
                     Greeting("Android")
 
                     viewmodel.getSavedLine()
-                  
-                    val lineSaved = viewmodel.lineList.collectAsState().value.firstOrNull()
 
-                    if (lineSaved != null) {
-                        LineItemComposable(Modifier.fillMaxSize(), lineSaved)
-                    }
-
+                    val lineSaved = viewmodel.stateFlow.collectAsState().value.lines
+                    MainView(lines = lineSaved)
                 }
             }
         }
