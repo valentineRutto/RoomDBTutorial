@@ -37,7 +37,9 @@ class LineViewModel(private val repository: LineRepository) : ViewModel() {
             when (it) {
                 is Resource.Error -> setState { copy(loading = false, error = it.errorMessage) }
                 is Resource.Loading -> setState { copy(loading = true) }
-                is Resource.Success -> setState { copy(loading = false, lines = it.data) }
+                is Resource.Success -> {
+                    setState { copy(loading = false, lines = it.data) }
+                }
             }
         }
     }
@@ -77,7 +79,7 @@ class LineViewModel(private val repository: LineRepository) : ViewModel() {
 
     data class UiState(
         val loading: Boolean = false,
-        val lines: List<PickuplineEntity> = emptyList(),
+        val lines: List<PickuplineEntity>? = emptyList(),
         val error: String = ""
     )
 }

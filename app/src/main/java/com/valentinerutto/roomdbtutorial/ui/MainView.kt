@@ -17,8 +17,8 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -34,37 +34,36 @@ import kotlinx.coroutines.launch
 fun MainView(
     modifier: Modifier = Modifier, lines: List<PickuplineEntity>
 ) {
-    Box(modifier.fillMaxSize()) {
-        Text(text = "MainView")
-        carousel(modifier = modifier.fillMaxSize(), lines = lines)
-    }
-}
-
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun carousel(modifier: Modifier, lines: List<PickuplineEntity>) {
-
-    val pagerState = rememberPagerState(pageCount = { lines.size })
-
-    HorizontalPager(state = pagerState, key = { lines[it] }, pageSize = PageSize.Fixed(300.dp)) {
-        LineItemComposable(modifier = modifier, entity = lines[it])
-        pageIndicators(pagerState = pagerState)
-    }
+    Carousel(modifier = modifier.fillMaxSize(), lines = lines)
 
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun pageIndicators(pagerState: PagerState) {
+fun Carousel(modifier: Modifier, lines: List<PickuplineEntity>) {
+    Box(modifier.fillMaxWidth()) {
+
+        val pagerState = rememberPagerState(pageCount = { lines.size })
+
+        HorizontalPager(state = pagerState, pageSize = PageSize.Fill) {
+            LineItemComposable(modifier = modifier.align(Alignment.Center), entity = lines[it])
+        }
+        PageIndicators(pagerState = pagerState, Modifier.align(Alignment.BottomCenter))
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun PageIndicators(pagerState: PagerState, modifier: Modifier) {
     val scope = rememberCoroutineScope()
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .offset(y = -(16).dp)
             .fillMaxWidth(0.5f)
             .clip(RoundedCornerShape(100))
-            .background(MaterialTheme.colorScheme.background)
-            .padding(8.dp)
+            .background(darkColorScheme().secondary)
+            .padding(6.dp)
     ) {
         IconButton(onClick = {
             scope.launch {
@@ -78,7 +77,7 @@ fun pageIndicators(pagerState: PagerState) {
                 contentDescription = "Go Back"
             )
         }
-        Text(text = "${pagerState.currentPage}")
+        Text(text = " ${pagerState.currentPage}", modifier = Modifier.align(Alignment.Center))
         IconButton(onClick = {
             scope.launch {
                 pagerState.animateScrollToPage(

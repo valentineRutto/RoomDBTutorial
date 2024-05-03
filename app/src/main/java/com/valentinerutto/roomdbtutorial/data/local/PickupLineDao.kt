@@ -1,7 +1,6 @@
 package com.valentinerutto.roomdbtutorial.data.local
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -23,6 +22,6 @@ interface PickupLineDao {
     @Query("Delete FROM pickuplines where idKey =:idKey")
     suspend fun deleteLine(idKey: Int)
 
-    @Delete
+    @Query("Delete  FROM pickuplines ")
     suspend fun deleteAll()
 }

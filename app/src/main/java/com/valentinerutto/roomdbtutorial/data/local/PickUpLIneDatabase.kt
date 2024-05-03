@@ -8,7 +8,7 @@ import com.valentinerutto.roomdbtutorial.utils.Constants
 
 @Database(
     entities = [PickuplineEntity::class], version = 1, exportSchema = false
-    //automigration -- read more about it
+    //automigration -- https://developer.android.com/training/data-storage/room/migrating-db-versions
 )
 abstract class PickUpLIneDatabase : RoomDatabase() {
     abstract fun lineDao(): PickupLineDao

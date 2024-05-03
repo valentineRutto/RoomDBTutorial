@@ -15,7 +15,7 @@ import java.io.IOException
 
 class LineRepository(private val apiService: ApiService, private val lineDao: PickupLineDao) {
 
-    suspend fun getAllLines(): Flow<List<PickuplineEntity>> {
+    fun getAllLines(): Flow<List<PickuplineEntity>> {
         return lineDao.getAllLines()
     }
 
@@ -27,9 +27,12 @@ class LineRepository(private val apiService: ApiService, private val lineDao: Pi
                 emit(Resource.Error(response.message()))
             }
 
-            val entity = mapResponseToEntity(response.body())!!
+            val entity = mapResponseToEntity(response.body())
 
-            lineDao.insertAll(entity)
+            if (entity != null) {
+                lineDao.insertAll(entity)
+            }
+
             emit(Resource.Success(entity))
 
         } catch (e: HttpException) {
@@ -69,8 +72,8 @@ class LineRepository(private val apiService: ApiService, private val lineDao: Pi
         }
     }
 
-   suspend fun refreshData(){
+    suspend fun refreshData() {
         lineDao.deleteAll()
-       getandSaveListPickupLine()
+        getandSaveListPickupLine()
     }
 }
