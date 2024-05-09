@@ -3,8 +3,13 @@ package com.valentinerutto.roomdbtutorial
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -12,7 +17,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
+import com.valentinerutto.roomdbtutorial.ui.CategoryChipCompossable
 import com.valentinerutto.roomdbtutorial.ui.LineViewModel
 import com.valentinerutto.roomdbtutorial.ui.MainView
 import com.valentinerutto.roomdbtutorial.ui.theme.RoomDBTutorialTheme
@@ -28,30 +35,52 @@ class MainActivity : ComponentActivity() {
         lifecycleScope.launch {
             viewmodel.getListofPickUpLines()
         }
+
     }
 
+    @OptIn(ExperimentalLayoutApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             RoomDBTutorialTheme {
                 // A surface container using the 'background' color from the theme
+
                 Surface(
                     modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
                 ) {
-                    Box {
+
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(8.dp)
+                    ) {
 
                         Text(text = "Pickup Lines")
 
                         val lineSaved = viewmodel.stateFlow.collectAsState().value.lines
+
                         if (lineSaved != null) {
+
+                            FlowRow(
+                                Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                                verticalArrangement = Arrangement.Top
+                            ) {
+                                lineSaved.distinctBy { it.category }.forEach {
+                                    CategoryChipCompossable(category = it.category, lineSaved)
+                                }
+                            }
+
                             MainView(lines = lineSaved)
                         }
+
                     }
                 }
             }
         }
     }
 }
+
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {

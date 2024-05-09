@@ -50,7 +50,7 @@ import kotlin.math.min
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MainView(
-    modifier: Modifier = Modifier, lines: List<PickuplineEntity>
+    modifier: Modifier = Modifier.fillMaxWidth(), lines: List<PickuplineEntity>
 ) {
 
     Carousel(modifier = modifier.fillMaxSize(), lines = lines)
@@ -61,6 +61,7 @@ fun MainView(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Carousel(modifier: Modifier, lines: List<PickuplineEntity>) {
+
     val pagerState = rememberPagerState(pageCount = { lines.size })
 
     val pageScale by remember {
