@@ -61,17 +61,13 @@ class MainActivity : ComponentActivity() {
 
                         if (lineSaved != null) {
 
-                            FlowRow(
-                                Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.spacedBy(6.dp),
-                                verticalArrangement = Arrangement.Top
-                            ) {
-                                lineSaved.distinctBy { it.category }.forEach {
-                                    CategoryChipCompossable(category = it.category, lineSaved)
+                                    CategoryChipCompossable( lineSaved, onSelectedChanged = {selectedIndex->
+
+
+                                    })
                                 }
                             }
 
-                            MainView(lines = lineSaved)
                         }
 
                     }
