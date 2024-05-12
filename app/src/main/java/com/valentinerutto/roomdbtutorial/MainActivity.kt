@@ -3,12 +3,9 @@ package com.valentinerutto.roomdbtutorial
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -21,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import com.valentinerutto.roomdbtutorial.ui.CategoryChipCompossable
 import com.valentinerutto.roomdbtutorial.ui.LineViewModel
-import com.valentinerutto.roomdbtutorial.ui.MainView
 import com.valentinerutto.roomdbtutorial.ui.theme.RoomDBTutorialTheme
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -61,17 +57,17 @@ class MainActivity : ComponentActivity() {
 
                         if (lineSaved != null) {
 
-                                    CategoryChipCompossable( lineSaved, onSelectedChanged = {selectedIndex->
+                            CategoryChipCompossable(
+                                lineSaved,
+                                onSelectedChanged = { selectedIndex ->
 
 
-                                    })
-                                }
-                            }
-
+                                })
                         }
-
                     }
+
                 }
+
             }
         }
     }

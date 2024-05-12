@@ -3,9 +3,7 @@ package com.valentinerutto.roomdbtutorial.ui
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
@@ -21,11 +19,12 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.valentinerutto.roomdbtutorial.data.local.PickuplineEntity
 
 @Composable
-fun CategoryChipCompossable(items: List<PickuplineEntity>,
-defaultSelectedItemIndex:Int = 0,
-selectedItemIcon: ImageVector = Icons.Filled.Done,
-itemIcon: ImageVector = Icons.Filled.Check,
-onSelectedChanged : (Int) -> Unit = {}
+fun CategoryChipCompossable(
+    items: List<PickuplineEntity>,
+    defaultSelectedItemIndex: Int = 0,
+    selectedItemIcon: ImageVector = Icons.Filled.Done,
+    itemIcon: ImageVector = Icons.Filled.Check,
+    onSelectedChanged: (Int) -> Unit = {}
 ) {
     var selectedItemIndex by remember { mutableStateOf(defaultSelectedItemIndex) }
 
@@ -52,9 +51,9 @@ onSelectedChanged : (Int) -> Unit = {}
                         )
                     }
                 } else {
-                 null
+                    null
                 },
             )
         }
     }
-    }
+}
