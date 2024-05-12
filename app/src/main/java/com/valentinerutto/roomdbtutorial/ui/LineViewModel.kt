@@ -44,6 +44,10 @@ class LineViewModel(private val repository: LineRepository) : ViewModel() {
         }
     }
 
+    fun getFilteredPickupLines(category: String) {
+        _lineList.value.filter { it.category == category }
+    }
+
     suspend fun getRandomLine() {
 
         when (val response = repository.getRandomLine()) {

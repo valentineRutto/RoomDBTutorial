@@ -24,7 +24,7 @@ fun CategoryChipCompossable(
     defaultSelectedItemIndex: Int = 0,
     selectedItemIcon: ImageVector = Icons.Filled.Done,
     itemIcon: ImageVector = Icons.Filled.Check,
-    onSelectedChanged: (Int) -> Unit = {}
+    onSelectedChanged: (String) -> Unit = {}
 ) {
     var selectedItemIndex by remember { mutableStateOf(defaultSelectedItemIndex) }
 
@@ -37,7 +37,7 @@ fun CategoryChipCompossable(
                 selected = items[selectedItemIndex] == items[index],
                 onClick = {
                     selectedItemIndex = index
-                    onSelectedChanged(index)
+                    onSelectedChanged(items[index].category)
                 },
                 label = {
                     Text(items[index].category)

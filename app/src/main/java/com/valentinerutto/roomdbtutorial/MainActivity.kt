@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import com.valentinerutto.roomdbtutorial.ui.CategoryChipCompossable
 import com.valentinerutto.roomdbtutorial.ui.LineViewModel
+import com.valentinerutto.roomdbtutorial.ui.MainView
 import com.valentinerutto.roomdbtutorial.ui.theme.RoomDBTutorialTheme
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -57,12 +58,12 @@ class MainActivity : ComponentActivity() {
 
                         if (lineSaved != null) {
 
-                            CategoryChipCompossable(
-                                lineSaved,
-                                onSelectedChanged = { selectedIndex ->
-
-
+                            CategoryChipCompossable(lineSaved,
+                                onSelectedChanged = { categorySelected ->
+                                    viewmodel.getFilteredPickupLines(categorySelected)
                                 })
+
+                            MainView(lines = lineSaved)
                         }
                     }
 
@@ -72,7 +73,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
