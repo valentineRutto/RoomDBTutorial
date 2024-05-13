@@ -3,7 +3,6 @@ package com.valentinerutto.roomdbtutorial.ui
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
@@ -23,26 +22,25 @@ fun CategoryChipCompossable(
     items: List<PickuplineEntity>,
     defaultSelectedItemIndex: Int = 0,
     selectedItemIcon: ImageVector = Icons.Filled.Done,
-    itemIcon: ImageVector = Icons.Filled.Check,
     onSelectedChanged: (String) -> Unit = {}
 ) {
     var selectedItemIndex by remember { mutableStateOf(defaultSelectedItemIndex) }
 
     LazyRow(userScrollEnabled = true) {
 
-        items.distinctBy { it.category }
+       val linesCategory= items.distinctBy { it.category }
 
-        items(items.size) { index: Int ->
+        items(linesCategory.size) { index: Int ->
             FilterChip(
-                selected = items[selectedItemIndex] == items[index],
+                selected = linesCategory[selectedItemIndex] == linesCategory[index],
                 onClick = {
                     selectedItemIndex = index
-                    onSelectedChanged(items[index].category)
+                    onSelectedChanged(linesCategory[index].category)
                 },
                 label = {
-                    Text(items[index].category)
+                    Text(linesCategory[index].category)
                 },
-                leadingIcon = if (items[selectedItemIndex] == items[index]) {
+                leadingIcon = if (linesCategory[selectedItemIndex] == linesCategory[index]) {
                     {
                         Icon(
                             imageVector = selectedItemIcon,

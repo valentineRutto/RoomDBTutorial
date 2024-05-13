@@ -50,18 +50,20 @@ import kotlin.math.min
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MainView(
-    modifier: Modifier = Modifier.fillMaxWidth(), lines: List<PickuplineEntity>
+    modifier: Modifier = Modifier.fillMaxWidth(), lines: List<PickuplineEntity>,pageSize:Int
 ) {
-
-    Carousel(modifier = modifier.fillMaxSize(), lines = lines)
+//todo:works fine as long the new selected list is withing the array size of the previous one,
+    //todo:find a way to make the page size mutable like live data
+    //todo:it breaks when pressing the indicators. with this error
+    Carousel(modifier = modifier.fillMaxSize(), lines = lines,pageSize)
 
 }
+
 //https://www.sinasamaki.com/setting-up-viewpager-in-jetpack-compose/
 //https://gist.github.com/sinasamaki/55693586ea97e0e425c22230c18a4784?ref=sinasamaki.com
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun Carousel(modifier: Modifier, lines: List<PickuplineEntity>) {
-
+fun Carousel(modifier: Modifier, lines: List<PickuplineEntity>,pageSize: Int) {
     val pagerState = rememberPagerState(pageCount = { lines.size })
 
     val pageScale by remember {
@@ -91,7 +93,6 @@ fun Carousel(modifier: Modifier, lines: List<PickuplineEntity>) {
 
         Box(modifier.fillMaxWidth()) {
 
-
             HorizontalPager(
                 state = pagerState,
                 pageSpacing = 16.dp,
@@ -103,6 +104,7 @@ fun Carousel(modifier: Modifier, lines: List<PickuplineEntity>) {
                     .scale(1f, scaleY = pageScale)
                     .aspectRatio(1f),
             ) { index ->
+                //todo:it breaks here with java.lang.IllegalArgumentException: page 20 is not within the range 0 to 16
                 Box(modifier = Modifier
                     .aspectRatio(1f)
                     .graphicsLayer {

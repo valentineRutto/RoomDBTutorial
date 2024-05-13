@@ -45,7 +45,14 @@ class LineViewModel(private val repository: LineRepository) : ViewModel() {
     }
 
     fun getFilteredPickupLines(category: String) {
-        _lineList.value.filter { it.category == category }
+        viewModelScope.launch {
+
+        stateFlow.collect {
+           val filteredList= it.lines?.filter { it.category == category }
+            setState { copy(loading=false, lines = filteredList) }
+        }
+
+        }
     }
 
     suspend fun getRandomLine() {
