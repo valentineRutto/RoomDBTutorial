@@ -1,5 +1,6 @@
 package com.valentinerutto.roomdbtutorial.ui
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.icons.Icons
@@ -15,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.dp
 import com.valentinerutto.roomdbtutorial.data.local.PickuplineEntity
 
 @Composable
@@ -28,10 +30,11 @@ fun CategoryChipCompossable(
 
     LazyRow(userScrollEnabled = true) {
 
-       val linesCategory= items.distinctBy { it.category }
+        val linesCategory = items.distinctBy { it.category }
 
         items(linesCategory.size) { index: Int ->
             FilterChip(
+                modifier = Modifier.padding(8.dp),
                 selected = linesCategory[selectedItemIndex] == linesCategory[index],
                 onClick = {
                     selectedItemIndex = index
