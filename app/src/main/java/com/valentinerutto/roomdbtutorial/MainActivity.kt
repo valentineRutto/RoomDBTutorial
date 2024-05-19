@@ -16,6 +16,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
@@ -26,6 +27,7 @@ import com.valentinerutto.roomdbtutorial.ui.MainView
 import com.valentinerutto.roomdbtutorial.ui.theme.RoomDBTutorialTheme
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlin.random.Random
 
 class MainActivity : ComponentActivity() {
     private val viewmodel by viewModel<LineViewModel>()
@@ -91,6 +93,12 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+}
+fun Color.Companion.random() : Color {
+    val red = Random.nextInt(256)
+    val green = Random.nextInt(256)
+    val blue = Random.nextInt(256)
+    return Color(red, green, blue)
 }
 
 @Composable

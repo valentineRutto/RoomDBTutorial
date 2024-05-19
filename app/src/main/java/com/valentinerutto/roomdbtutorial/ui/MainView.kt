@@ -1,6 +1,5 @@
 package com.valentinerutto.roomdbtutorial.ui
 
-import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -33,29 +32,27 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.BlurredEdgeTreatment
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.TransformOrigin
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.valentinerutto.roomdbtutorial.data.local.PickuplineEntity
+import com.valentinerutto.roomdbtutorial.random
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
-import kotlin.math.min
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MainView(
-    modifier: Modifier = Modifier.fillMaxWidth(), lines: List<PickuplineEntity>,pageSize:Int
+    modifier: Modifier = Modifier.fillMaxWidth(), lines: List<PickuplineEntity>, pageSize: Int
 ) {
 //todo:works fine as long the new selected list is withing the array size of the previous one,
     //todo:find a way to make the page size mutable like live data
     //todo:it breaks when pressing the indicators. with this error
-    Carousel(modifier = modifier.fillMaxSize(), lines = lines,pageSize)
+    println("size :init size: ${lines.size}")
+    Carousel(modifier = modifier.fillMaxSize(), lines = lines, pageSize)
 
 }
 
@@ -63,7 +60,8 @@ fun MainView(
 //https://gist.github.com/sinasamaki/55693586ea97e0e425c22230c18a4784?ref=sinasamaki.com
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun Carousel(modifier: Modifier, lines: List<PickuplineEntity>,pageSize: Int) {
+fun Carousel(modifier: Modifier, lines: List<PickuplineEntity>, pageSize: Int) {
+
     val pagerState = rememberPagerState(pageCount = { lines.size })
 
     val pageScale by remember {
@@ -72,13 +70,15 @@ fun Carousel(modifier: Modifier, lines: List<PickuplineEntity>,pageSize: Int) {
         }
     }
 
+    val bgColor = Color.Companion.random()
     Box(
         modifier = Modifier
-            .background(Color.White)
-            .fillMaxSize(),
-        contentAlignment = Alignment.Center
+            .background(Color.Transparent)
+            .fillMaxSize(), contentAlignment = Alignment.Center
     ) {
+
         val offsetFromStart = pagerState.getOffsetFractionForPage(0).absoluteValue
+
         Box(modifier = Modifier
             .aspectRatio(1f)
             .offset { IntOffset(0, 150.dp.roundToPx()) }
@@ -92,7 +92,6 @@ fun Carousel(modifier: Modifier, lines: List<PickuplineEntity>,pageSize: Int) {
             .background(Color.Black.copy(alpha = .5f)))
 
         Box(modifier.fillMaxWidth()) {
-
             HorizontalPager(
                 state = pagerState,
                 pageSpacing = 16.dp,
@@ -104,31 +103,33 @@ fun Carousel(modifier: Modifier, lines: List<PickuplineEntity>,pageSize: Int) {
                     .scale(1f, scaleY = pageScale)
                     .aspectRatio(1f),
             ) { index ->
-                //todo:it breaks here with java.lang.IllegalArgumentException: page 20 is not within the range 0 to 16
-                Box(modifier = Modifier
-                    .aspectRatio(1f)
-                    .graphicsLayer {
-                        val pageOffset = pagerState.getOffsetFractionForPage(index)
-                        val offScreenRight = pageOffset < 0f
-                        val deg = 105f
-                        val interpolated = FastOutLinearInEasing.transform(pageOffset.absoluteValue)
-                        rotationY = min(interpolated * if (offScreenRight) deg else -deg, 90f)
 
-                        transformOrigin = TransformOrigin(
-                            pivotFractionX = if (offScreenRight) 0f else 1f, pivotFractionY = .5f
-                        )
-                    }
-                    .drawWithContent {
-                        val pageOffset = pagerState.getOffsetFractionForPage(index)
-
-                        this.drawContent()
-                        drawRect(
-                            Color.Black.copy(
-                                (pageOffset.absoluteValue * .7f)
-                            )
-                        )
-                    }
-                    .background(Color.LightGray), contentAlignment = Alignment.Center) {
+                Box(
+                    modifier = Modifier
+                        .aspectRatio(1f)
+//                    .graphicsLayer {
+//                        val pageOffset = pagerState.getOffsetFractionForPage(index)
+//                        val offScreenRight = pageOffset < 0f
+//                        val deg = 105f
+//                        val interpolated = FastOutLinearInEasing.transform(pageOffset.absoluteValue)
+//                        rotationY = min(interpolated * if (offScreenRight) deg else -deg, 90f)
+//
+//                        transformOrigin = TransformOrigin(
+//                            pivotFractionX = if (offScreenRight) 0f else 1f, pivotFractionY = .5f
+//                        )
+//                    }
+//                    .drawWithContent {
+//                        val pageOffset = pagerState.getOffsetFractionForPage(index)
+//
+//                        this.drawContent()
+//                        drawRect(
+//                            Color.Black.copy(
+//                                (pageOffset.absoluteValue * .7f)
+//                            )
+//                        )
+//                    }
+                        .background(Color.White), contentAlignment = Alignment.Center
+                ) {
                     LineItemComposable(
                         modifier = modifier.align(Alignment.Center), entity = lines[index]
                     )
@@ -142,6 +143,7 @@ fun Carousel(modifier: Modifier, lines: List<PickuplineEntity>,pageSize: Int) {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PageIndicators(pagerState: PagerState, modifier: Modifier) {
+
     val scope = rememberCoroutineScope()
 
     Box(
@@ -149,9 +151,10 @@ fun PageIndicators(pagerState: PagerState, modifier: Modifier) {
             .offset(y = -(16).dp)
             .fillMaxWidth(0.5f)
             .clip(RoundedCornerShape(100))
-            .background(darkColorScheme().secondary)
+            .background(Color.random())
             .padding(6.dp)
     ) {
+
         IconButton(onClick = {
             scope.launch {
                 pagerState.animateScrollToPage(
@@ -164,7 +167,9 @@ fun PageIndicators(pagerState: PagerState, modifier: Modifier) {
                 contentDescription = "Go Back"
             )
         }
+
         Text(text = " ${pagerState.currentPage}", modifier = Modifier.align(Alignment.Center))
+
         IconButton(onClick = {
             scope.launch {
                 pagerState.animateScrollToPage(
@@ -178,9 +183,7 @@ fun PageIndicators(pagerState: PagerState, modifier: Modifier) {
             )
         }
     }
-
 }
-
 
 @Preview(name = "MainView")
 @Composable

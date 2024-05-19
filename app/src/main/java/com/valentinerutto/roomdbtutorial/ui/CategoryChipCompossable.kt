@@ -11,6 +11,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -26,7 +27,7 @@ fun CategoryChipCompossable(
     selectedItemIcon: ImageVector = Icons.Filled.Done,
     onSelectedChanged: (String) -> Unit = {}
 ) {
-    var selectedItemIndex by remember { mutableStateOf(defaultSelectedItemIndex) }
+    var selectedItemIndex by remember { mutableIntStateOf(defaultSelectedItemIndex) }
 
     LazyRow(userScrollEnabled = true) {
 
