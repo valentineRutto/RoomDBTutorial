@@ -27,7 +27,7 @@ fun LineItemComposable(modifier: Modifier, entity: PickuplineEntity) {
     Card(
         modifier = Modifier
             .padding(16.dp)
-            .fillMaxWidth()
+            .fillMaxWidth().background(Color.random())
             .wrapContentSize(align = Alignment.Center)
             .height(300.dp), shape = RoundedCornerShape(16.dp)
 

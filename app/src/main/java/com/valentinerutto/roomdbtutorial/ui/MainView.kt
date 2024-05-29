@@ -21,7 +21,6 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -29,14 +28,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.BlurredEdgeTreatment
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.valentinerutto.roomdbtutorial.data.local.PickuplineEntity
 import com.valentinerutto.roomdbtutorial.random
@@ -74,22 +69,10 @@ fun Carousel(modifier: Modifier, lines: List<PickuplineEntity>, pageSize: Int) {
     Box(
         modifier = Modifier
             .background(Color.Transparent)
-            .fillMaxSize(), contentAlignment = Alignment.Center
+            .fillMaxSize(),
+        contentAlignment = Alignment.Center
     ) {
 
-        val offsetFromStart = pagerState.getOffsetFractionForPage(0).absoluteValue
-
-        Box(modifier = Modifier
-            .aspectRatio(1f)
-            .offset { IntOffset(0, 150.dp.roundToPx()) }
-            .scale(scaleX = .6f, scaleY = .24f)
-            .scale(pageScale)
-            .rotate(offsetFromStart * 90f)
-            .blur(
-                radius = 110.dp,
-                edgeTreatment = BlurredEdgeTreatment.Unbounded,
-            )
-            .background(Color.Black.copy(alpha = .5f)))
 
         Box(modifier.fillMaxWidth()) {
             HorizontalPager(
@@ -104,36 +87,10 @@ fun Carousel(modifier: Modifier, lines: List<PickuplineEntity>, pageSize: Int) {
                     .aspectRatio(1f),
             ) { index ->
 
-                Box(
-                    modifier = Modifier
-                        .aspectRatio(1f)
-//                    .graphicsLayer {
-//                        val pageOffset = pagerState.getOffsetFractionForPage(index)
-//                        val offScreenRight = pageOffset < 0f
-//                        val deg = 105f
-//                        val interpolated = FastOutLinearInEasing.transform(pageOffset.absoluteValue)
-//                        rotationY = min(interpolated * if (offScreenRight) deg else -deg, 90f)
-//
-//                        transformOrigin = TransformOrigin(
-//                            pivotFractionX = if (offScreenRight) 0f else 1f, pivotFractionY = .5f
-//                        )
-//                    }
-//                    .drawWithContent {
-//                        val pageOffset = pagerState.getOffsetFractionForPage(index)
-//
-//                        this.drawContent()
-//                        drawRect(
-//                            Color.Black.copy(
-//                                (pageOffset.absoluteValue * .7f)
-//                            )
-//                        )
-//                    }
-                        .background(Color.White), contentAlignment = Alignment.Center
-                ) {
-                    LineItemComposable(
-                        modifier = modifier.align(Alignment.Center), entity = lines[index]
-                    )
-                }
+                LineItemComposable(
+                    modifier = modifier.align(Alignment.Center), entity = lines[index]
+                )
+
             }
             PageIndicators(pagerState = pagerState, Modifier.align(Alignment.BottomCenter))
         }
@@ -151,12 +108,13 @@ fun PageIndicators(pagerState: PagerState, modifier: Modifier) {
             .offset(y = -(16).dp)
             .fillMaxWidth(0.5f)
             .clip(RoundedCornerShape(100))
-            .background(Color.random())
             .padding(6.dp)
+            .background(Color.Companion.random())
     ) {
 
         IconButton(onClick = {
             scope.launch {
+
                 pagerState.animateScrollToPage(
                     pagerState.currentPage - 1
                 )
