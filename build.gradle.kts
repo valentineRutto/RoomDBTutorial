@@ -2,5 +2,7 @@
 plugins {
     alias(libs.plugins.androidApplication) apply false
     alias(libs.plugins.jetbrainsKotlinAndroid) apply false
-alias(libs.plugins.devtoolsksp) apply false
+    alias(libs.plugins.devtoolsksp) apply false
+    alias(libs.plugins.benmanesversions)
+    alias(libs.plugins.versioncatalogupdate)
 }
